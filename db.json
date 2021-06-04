@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": 2,
+      "firstName": "Rosi ",
+      "lastName": "Miranda",
+      "email": "rosi@hotmail.com",
+      "image": "https://cdn2www.mundo.com/fotos/201503/pug-031-600x456.jpg",
+      "isActive": false
+    },
+    {
+      "id": 3,
+      "firstName": "alex ",
+      "lastName": "sanchez",
+      "email": "alex@hotmail.com",
+      "image": "https://cdn2www.mundo.com/fotos/201503/pug-031-600x456.jpg",
+      "isActive": false
+    }
+  ]
+}
