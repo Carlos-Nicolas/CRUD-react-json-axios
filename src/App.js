@@ -25,31 +25,37 @@ function App() {
 
 
   const userDesactivateHandlder = (id, status) => {
-    // try {
-    //   const response = axios({
-    //     url: `${baseUrl}/${id}`,
-    //     method: "PUT",
-    //     data:  {
-    //     },
-    //   });
-    //   return response;
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      const response = axios({
+        url: `${baseUrl}/${id}`,
+        method: "PUT",
+        data:  setUsrList{
+          id:,
+          firstName:,
+          lastName:,
+          email:,
+          image:,
+          isActive: {isActive != isActive}
+        },
+      });
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
 
-    console.log(status, id);
-    usrList.map((user) => {
-      if (user.id == id) {
-        if ((status = true)) {
-          return { ...user, isActive: false };
-        } else {
-          return { ...user, isActive: true };
-        }
-      } else {
-        return user;
-      }
-    });
-  };
+  //   console.log(status, id);
+  //   usrList.map((user) => {
+  //     if (user.id == id) {
+  //       if ((status = true)) {
+  //         return { ...user, isActive: false };
+  //       } else {
+  //         return { ...user, isActive: true };
+  //       }
+  //     } else {
+  //       return user;
+  //     }
+  //   });
+  // };
   //user efect
 
   const userDeleteHandler = (id) => {
