@@ -4,11 +4,13 @@ import UserModal from "./Components/UI/UserModal";
 import UserList from "./Components/UsrListFolder/UserList";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Route, Switch } from "react-router-dom";
+import CardUser from "./Components/User/CardUser";
 
-  //usestate
-  //use reducer
-  //use context
-  // use efects
+//usestate
+//use reducer
+//use context
+// use efects
 
 function App() {
   const baseUrl = "http://localhost:3001/users";
@@ -22,48 +24,37 @@ function App() {
     });
   }, []);
 
+  const userChangeHandler = (user) => {
+    setUsrList((prevState) => {
+      return [...prevState, user.data];
+    });
+  };
 
-
-  const userDesactivateHandlder = (id, status) => {
+  const userDesactivateHandlder = async (actualUser) => {
     try {
-      const response = axios({
-        url: `${baseUrl}/${id}`,
-        method: "PUT",
-        data:  setUsrList{
-          id:,
-          firstName:,
-          lastName:,
-          email:,
-          image:,
-          isActive: {isActive != isActive}
-        },
-      });
-      return response;
+      const response = await axios.put(
+        `${baseUrl}/${actualUser.id}`,
+        actualUser
+      );
+      let array = [...usrList];
+      const idx = array.findIndex((person) => person.id === actualUser.id);
+      array[idx].isActive = !array[idx].isActive;
+      setUsrList(array);
+      return response.data;
     } catch (e) {
-      console.log(e);
+      console.log(console.error(e));
     }
+  };
 
-  //   console.log(status, id);
-  //   usrList.map((user) => {
-  //     if (user.id == id) {
-  //       if ((status = true)) {
-  //         return { ...user, isActive: false };
-  //       } else {
-  //         return { ...user, isActive: true };
-  //       }
-  //     } else {
-  //       return user;
-  //     }
-  //   });
-  // };
-  //user efect
-
-  const userDeleteHandler = (id) => {
+  const userDeleteHandler = async (id) => {
     try {
-      const response = axios({
+      const response = await axios({
         url: `${baseUrl}/${id}`,
         method: "DELETE",
       });
+
+      const newUsers = usrList.filter((user) => user.id !== id);
+      setUsrList(newUsers);
       return response;
     } catch (e) {
       console.log(e);
@@ -71,20 +62,29 @@ function App() {
   };
 
   return (
-    <>
-      <Header setitsOpenModal={setitsOpenModal} usrList={usrList.length} />
-      <UserList
-        users={usrList}
-        setUsrList={setUsrList}
-        userDesactivateHandlder={userDesactivateHandlder}
-        userDeleteHandler={userDeleteHandler}
-      />
-      <UserModal
-        itsOpenModal={itsOpenModal}
-        setitsOpenModal={setitsOpenModal}
-        users={usrList}
-      />
-    </>
+    <Switch>
+      <Route path="/" exact>
+        <>
+          <Header setitsOpenModal={setitsOpenModal} usrList={usrList.length} />
+          <UserList
+            users={usrList}
+            setUsrList={setUsrList}
+            userDesactivateHandlder={userDesactivateHandlder}
+            userDeleteHandler={userDeleteHandler}
+          />
+          <UserModal
+            itsOpenModal={itsOpenModal}
+            setitsOpenModal={setitsOpenModal}
+            addUser={userChangeHandler}
+          />
+        </>
+      </Route>
+      <Route path="/user/:id">
+        <CardUser
+          users={usrList}
+        />
+      </Route>
+    </Switch>
   );
 }
 

@@ -1,8 +1,8 @@
 import { Button, Modal, TextField } from "@material-ui/core";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import axios from "axios";
 
-const UserModal = ({ itsOpenModal, setitsOpenModal, handler, users }) => {
+const UserModal = ({ itsOpenModal, setitsOpenModal, addUser }) => {
   const [firtsName, setfirtsName] = useState("");
   const [lastName, setlastName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,9 +11,9 @@ const UserModal = ({ itsOpenModal, setitsOpenModal, handler, users }) => {
     setitsOpenModal(false);
   };
 
-  const addUserHandle = () => {
+  const addUserHandler = async () => {
     try {
-      const response = axios({
+      const user = await axios({
         url: "http://localhost:3001/users",
         method: "POST",
         data: {
@@ -21,16 +21,14 @@ const UserModal = ({ itsOpenModal, setitsOpenModal, handler, users }) => {
           firstName: firtsName,
           lastName: lastName,
           email: email,
-          image:
-            "https://www.bunko.pet/__export/1611708686389/sites/debate/img/2021/01/26/9_datos_interesantes_sobre_los_perros_pug_que_tal_vez_no_sabxas.jpeg_1404015752.jpeg",
+          image: "https://cdn2www.mundo.com/fotos/201503/pug-031-600x456.jpg",
           isActive: true,
         },
       });
-      return response;
+      addUser(user);
     } catch (e) {
       console.log(e);
     }
-    setitsOpenModal(false);  
   };
 
   return (
@@ -58,7 +56,7 @@ const UserModal = ({ itsOpenModal, setitsOpenModal, handler, users }) => {
           ></TextField>
         </div>
         <div className="actions">
-          <Button onClick={() => addUserHandle()}>Agregar</Button>
+          <Button onClick={() => addUserHandler()}>Agregar</Button>
           <Button onClick={closeModal}>Cerrar</Button>
         </div>
       </div>

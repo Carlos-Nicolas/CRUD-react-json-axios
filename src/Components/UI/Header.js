@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import UserList from "../UsrListFolder/UserList";
 
 const Header = ({ setitsOpenModal, usrList }) => {
   const openModal = () => {
