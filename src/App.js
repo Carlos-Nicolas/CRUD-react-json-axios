@@ -16,6 +16,11 @@ function App() {
   const baseUrl = "http://localhost:3001/users";
   const [usrList, setUsrList] = useState([]);
 
+  const passSet = (userList) => {
+    setUsrList(userList); 
+  };
+
+
   const [itsOpenModal, setitsOpenModal] = useState(false);
 
   useEffect(() => {
@@ -80,8 +85,8 @@ function App() {
         </>
       </Route>
       <Route path="/user/:id">
-        <CardUser
-          users={usrList}
+        <CardUser users={usrList} passSet={passSet} 
+        
         />
       </Route>
     </Switch>
